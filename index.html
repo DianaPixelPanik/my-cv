@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diana SmirnovaAI Engineer | Full-Stack Software Engineer | Product Designer</title>
+  <style>
+    /* ── Reset & Variables ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1B3A5C;
+      --accent: #2E6DA4;
+      --accent2:#3a82c4;
+      --gray:   #555555;
+      --lgray:  #888888;
+      --black:  #1A1A1A;
+      --bg:     #ffffff;
+      --bg2:    #f7f9fc;
+      --border: #e2e8f0;
+      --text:   #1A1A1A;
+      --tag-bg: #EBF4FF;
+      --tag-color: #2E6DA4;
+      --card-bg: #ffffff;
+      --shadow: 0 1px 4px rgba(27,58,92,0.08);
+      --shadow-hover: 0 4px 16px rgba(27,58,92,0.14);
+    }
+    [data-theme="dark"] {
+      --navy:   #7eb8f7;
+      --accent: #60a5fa;
+      --accent2:#93c5fd;
+      --gray:   #a0aec0;
+      --lgray:  #718096;
+      --black:  #e2e8f0;
+      --bg:     #0f172a;
+      --bg2:    #1e293b;
+      --border: #2d3748;
+      --text:   #e2e8f0;
+      --tag-bg: #1e3a5f;
+      --tag-color: #93c5fd;
+      --card-bg: #1e293b;
+      --shadow: 0 1px 4px rgba(0,0,0,0.3);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ── Top bar ───────────────────────────────────────────────────────── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .topbar-left {
+      font-size: 13px;
+      color: var(--lgray);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .topbar-left a {
+      color: var(--lgray);
+      text-decoration: none;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+    .topbar-left a:hover { color: var(--accent); }
+    .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(46,109,164,0.3); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--gray);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--bg2); color: var(--accent); border-color: var(--accent); }
+
+    /* ── Layout ────────────────────────────────────────────────────────── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────────── */
+    .cv-header {
+      margin-bottom: 40px;
+    }
+    .cv-header h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .cv-header .subtitle {
+      font-size: 1.05rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13.5px;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-item:hover { color: var(--accent); }
+    .contact-item svg { flex-shrink: 0; }
+
+    /* ── Section ───────────────────────────────────────────────────────── */
+    .cv-section {
+      margin-bottom: 44px;
+    }
+    .section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+
+    /* ── Summary ───────────────────────────────────────────────────────── */
+    .summary-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--bg2);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ── Experience ────────────────────────────────────────────────────── */
+    .employer-block {
+      margin-bottom: 32px;
+    }
+    .employer-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .employer-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .employer-meta {
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .project-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .project-date {
+      font-size: 12px;
+      color: var(--lgray);
+      white-space: nowrap;
+    }
+    .project-bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .project-bullets li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 13.5px;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+    .project-bullets li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+      top: 3px;
+    }
+
+    /* Previous roles */
+    .role-item {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .role-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .role-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .role-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .role-date {
+      font-size: 12px;
+      color: var(--lgray);
+    }
+    .role-company {
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .role-bullets {
+      list-style: none;
+    }
+    .role-bullets li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 13.5px;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 5px;
+    }
+    .role-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── Skills ────────────────────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .skill-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .skill-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      padding-top: 3px;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      border-radius: 5px;
+      padding: 3px 10px;
+      font-size: 12.5px;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .tag:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+    /* ── Additional Projects ───────────────────────────────────────────── */
+    .addon-list {
+      display: grid;
+      gap: 10px;
+    }
+    .addon-item {
+      background: var(--bg2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: var(--text);
+      line-height: 1.6;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .addon-item:hover { border-color: var(--accent); }
+    .addon-item b { color: var(--navy); }
+
+    /* ── Certs & Education ─────────────────────────────────────────────── */
+    .cert-list {
+      display: grid;
+      gap: 12px;
+    }
+    .cert-item {
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cert-item:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+    .cert-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .cert-meta {
+      font-size: 12.5px;
+      color: var(--lgray);
+      margin-bottom: 6px;
+    }
+    .cert-skills {
+      font-size: 12px;
+      color: var(--gray);
+      font-style: italic;
+    }
+    .edu-item {
+      padding: 14px 18px;
+      border-left: 3px solid var(--lgray);
+      background: var(--bg2);
+      border-radius: 0 8px 8px 0;
+      font-size: 13.5px;
+      color: var(--gray);
+    }
+
+    /* ── Placeholder note ──────────────────────────────────────────────── */
+    .placeholder-note {
+      background: #fffbeb;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12.5px;
+      color: #92400e;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    [data-theme="dark"] .placeholder-note {
+      background: #2d1f00;
+      border-color: #b45309;
+      color: #fcd34d;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 12px;
+      color: var(--lgray);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Print ─────────────────────────────────────────────────────────── */
+    @media print {
+      .topbar, .placeholder-note, footer { display: none; }
+      .project-card { box-shadow: none; border: 1px solid #ddd; }
+      main { padding: 20px; max-width: 100%; }
+    }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .cv-header h1 { font-size: 1.8rem; }
+      .skill-row { grid-template-columns: 1fr; gap: 4px; }
+      .topbar { padding: 8px 14px; }
+      main { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top bar ──────────────────────────────────────────────────────────── -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="#" onclick="return false;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Diana Smirnova
+      </a>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-ghost" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <span id="themeLabel">Light mode</span>
+      </button>
+      <a href="Diana_Smirnova_Resume.pdf" download class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Main content ──────────────────────────────────────────────────────── -->
+  <main id="resume-content">
+
+    <!-- Header -->
+    <header class="cv-header">
+      <h1>Diana Smirnova</h1>
+      <p class="subtitle">AI Engineer | Full-Stack Software Engineer | Product Designer</p>
+      <div class="contact-row">
+        <a href="mailto:dianaart1997@gmail.com" class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          dianaart1997@gmail.com
+        </a>
+        <a href="https://github.com/DianaPixelPanik" target="_blank" rel="noopener" class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          github.com/DianaPixelPanik
+        </a>
+        <a href="https://linkedin.com/in/diana-smirnova97" target="_blank" rel="noopener" class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/diana-smirnova97
+        </a>
+        <span class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Tallinn, Estonia
+        </span>
+      </div>
+    </header>
+
+    <!-- Summary -->
+    <section class="cv-section">
+      <div class="section-title">Professional Summary</div>
+      <p class="summary-text">
+        Full-stack software engineer with 4+ years delivering end-to-end product features across billing systems, POS integrations, device management platforms, and internal operational tooling at Erply, a retail SaaS platform serving thousands of merchants globally. Proficient across the full stack: Go, JavaScript, TypeScript, PostgreSQL, MongoDB, MariaDB on the backend; React, Redux, Material UI, and WebAssembly on the frontend; S3, Fluentd, Parquet, Webpack, and GitHub Actions in infrastructure. Designs database schemas (1NF–3NF), builds REST APIs and admin UIs, writes unit and integration tests, and owns third-party integrations from API design to production deployment. AWS Cloud Practitioner foundations; experienced with CI/CD pipelines. Background in product design and UI/UX brings a user-first perspective to every technical decision.
+      </p>
+    </section>
+
+    <!-- Work Experience -->
+    <section class="cv-section">
+      <div class="section-title">Work Experience</div>
+
+      <!-- Erply -->
+      <div class="employer-block">
+        <div class="employer-header">
+          <span class="employer-name">Erply Retail Platform · Full-time</span>
+        </div>
+        <div class="employer-meta">Tallinn, Estonia · July 2022 – Present (4 years)</div>
+
+        <!-- Elektrilevi -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Elektrilevi Energy</span>
+            <span class="project-date">Oct 2025 – Apr 2026</span>
+          </div>
+          <ul class="project-bullets">
+            <li>Delivered invoice management system (Go + REST API + Go Templates) for Estonian energy provider covering the full billing lifecycle: creation, editing, correction, and reconciliationreplacing a manual process across ~80,000 customer accounts.</li>
+            <li>Built tariff engine supporting multiple electricity package types with dynamic pricing rules, eliminating 20+ manual configuration steps per billing cycle and reducing pricing errors.</li>
+            <li>Engineered admin portal with audit logging, operational dashboards, and data tables adopted by internal ops team; reduced billing investigation time from hours to minutes via searchable event trail.</li>
+            <li>Integrated billing, customer, and invoice backend services via REST APIs, enabling unified data flow and cutting cross-system reconciliation effort by ~50%.</li>
+            <li>Covered billing calculation and tariff logic with unit tests (Go testing package); caught 12 regression bugs before production and reduced QA cycle time on billing releases by ~30%.</li>
+          </ul>
+        </div>
+
+        <!-- Audit Log -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Audit Log Platform</span>
+            <span class="project-date">Nov 2025 – Apr 2026</span>
+          </div>
+          <ul class="project-bullets">
+            <li>Architected centralised audit logging system (S3 + Parquet + Fluentd) capturing user actions and system events across 15 backend services in real-time with sub-second write latency.</li>
+            <li>Built log search and filter UI enabling ops and security teams to locate any event within under 3 seconds; critical for regulatory compliance in Estonian energy sector.</li>
+            <li>Implemented MongoDB-backed event storage with structured schemas, enabling historical analysis, event replay, and long-term retention without schema migrations.</li>
+          </ul>
+        </div>
+
+        <!-- Ground Control -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Ground Control</span>
+            <span class="project-date">Nov 2023 – Oct 2025</span>
+          </div>
+          <ul class="project-bullets">
+            <li>Built remote configuration platform for payment terminals and POS systems, enabling 1,000+ devices to be provisioned and updated remotelyeliminating on-site visits for routine config changes.</li>
+            <li>Designed device management system with real-time terminal health monitoring and status tracking; reduced terminal downtime by 35% via early fault detection and automated alerting.</li>
+            <li>Integrated payment terminals with Erply POS via REST APIs, unifying transaction flow across multiple hardware vendors and enabling same-day onboarding of new terminal models.</li>
+            <li>Developed device registry, warehouse data management, and internal admin dashboards used by the ops team for day-to-day device fleet management.</li>
+          </ul>
+        </div>
+
+        <!-- Promotions -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Promotions Engine</span>
+            <span class="project-date">Aug 2025 – Nov 2025</span>
+          </div>
+          <ul class="project-bullets">
+            <li>Built promotion and discount management platform (Go + PostgreSQL) supporting campaign creation, pricing rules, and automated discount workflows for 3,000+ merchants.</li>
+            <li>Implemented product selection engine with filtering, multi-select, and rule-based targetingenabling marketing team to configure targeted promotions without engineering involvement.</li>
+            <li>Designed promotion logic and pricing calculation layer handling edge cases such as stacked discounts, time-limited offers, and minimum order thresholds.</li>
+          </ul>
+        </div>
+
+        <!-- Stocktaking -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Stocktaking App</span>
+            <span class="project-date">Dec 2023 – May 2024</span>
+          </div>
+          <ul class="project-bullets">
+            <li>Developed mobile stocktaking application (JS) for warehouse operationsbarcode scanning, inventory counting, and cycle counting across large product catalogues.</li>
+            <li>Implemented multi-step verification workflow and stack adjustment tools, reducing inventory discrepancy errors by 40% versus manual counting.</li>
+            <li>Built inventory visibility dashboards and role-based access controls for warehouse and back-office users, enabling real-time stock tracking across 20 locations.</li>
+            <li>Wrote unit and integration tests for inventory calculation workflows, ensuring counting accuracy across concurrent sessions and edge-case stock adjustments.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Previous roles -->
+      <div class="role-item">
+        <div class="role-header">
+          <span class="role-title">Game UI/UX Designer</span>
+          <span class="role-date">Feb 2021 – Dec 2021 · 10 mos</span>
+        </div>
+        <div class="role-company">Belisma OÜ · Freelance · Estonia</div>
+        <ul class="role-bullets">
+          <li>Designed and shipped game UI systems, user flows, and product interfaces across web, mobile, and browser-based platforms using Photoshop, Illustrator, and Figma.</li>
+          <li>Collaborated directly with developers on cross-platform implementation, translating design specs into production-ready assets.</li>
+        </ul>
+      </div>
+
+      <div class="role-item">
+        <div class="role-header">
+          <span class="role-title">Product Design Engineer</span>
+          <span class="role-date">Jan 2020 – Dec 2020 · 1 yr</span>
+        </div>
+        <div class="role-company">Reinvent Baltics · Full-time · Estonia</div>
+        <ul class="role-bullets">
+          <li>Improved UX and information architecture for payment flow interfaces used by Estonian consumers; redesigned onboarding that reduced drop-off at key conversion steps.</li>
+          <li>Produced animated banners, advertising materials, and UX documentation for international web campaigns.</li>
+        </ul>
+      </div>
+
+      <div class="role-item">
+        <div class="role-header">
+          <span class="role-title">UI/UX Designer</span>
+          <span class="role-date">Jul 2019 – Jan 2020 · 7 mos</span>
+        </div>
+        <div class="role-company">SocialMedia.Market · Estonia</div>
+        <ul class="role-bullets">
+          <li>Designed user interfaces for web services and mobile applications; built prototypes for usability testing with real users.</li>
+        </ul>
+      </div>
+
+      <div class="role-item">
+        <div class="role-header">
+          <span class="role-title">UI/UX Designer</span>
+          <span class="role-date">Jan 2018 – Dec 2019 · 2 yrs</span>
+        </div>
+        <div class="role-company">MindGrain Studio · Kyiv Region, Ukraine</div>
+        <ul class="role-bullets">
+          <li>Created game and product graphics, brand identity systems, and UI layouts; designed full UI for MindGrain company website.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="cv-section">
+      <div class="section-title">Technical Skills</div>
+      <div class="skills-grid">
+        <div class="skill-row">
+          <span class="skill-label">Languages</span>
+          <div class="skill-tags">
+            <span class="tag">Go (Golang)</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">SQL</span>
+            <span class="tag">C#</span>
+            <span class="tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Databases</span>
+          <div class="skill-tags">
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">MariaDB</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Backend</span>
+          <div class="skill-tags">
+            <span class="tag">REST API design</span>
+            <span class="tag">Microservices</span>
+            <span class="tag">Event-driven architecture</span>
+            <span class="tag">Go Templates</span>
+            <span class="tag">MVC/MVP/MVVM</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Frontend</span>
+          <div class="skill-tags">
+            <span class="tag">React</span>
+            <span class="tag">Redux</span>
+            <span class="tag">Redux-thunk</span>
+            <span class="tag">Material UI</span>
+            <span class="tag">Axios</span>
+            <span class="tag">WebAssembly</span>
+            <span class="tag">Kibana</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Infrastructure</span>
+          <div class="skill-tags">
+            <span class="tag">AWS (Cloud Practitioner)</span>
+            <span class="tag">S3</span>
+            <span class="tag">Fluentd</span>
+            <span class="tag">Parquet</span>
+            <span class="tag">Git</span>
+            <span class="tag">Webpack</span>
+            <span class="tag">JSON/XML</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Testing</span>
+          <div class="skill-tags">
+            <span class="tag">Unit testing</span>
+            <span class="tag">Integration testing</span>
+            <span class="tag">Go testing package</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Practices</span>
+          <div class="skill-tags">
+            <span class="tag">Error handling</span>
+            <span class="tag">Data normalisation (1NF–3NF)</span>
+            <span class="tag">SQL performance optimisation</span>
+            <span class="tag">CI/CD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Projects -->
+    <section class="cv-section">
+      <div class="section-title">Additional Projects @ Erply</div>
+      <div class="addon-list">
+        <div class="addon-item"><b>Employee &amp; User Management Platform</b>Full-stack system managing employee accounts, permissions, authentication, and activity tracking across the Erply product suite.</div>
+        <div class="addon-item"><b>Register &amp; Warehouse Management</b>Platform for managing product registers, warehouse operations, inventory data, and internal stock workflows.</div>
+        <div class="addon-item"><b>Tax Reporting Platform</b>Financial data management and automated operational reporting for tax compliance workflows.</div>
+        <div class="addon-item"><b>Authentication &amp; Access Management</b>Login systems, session verification, user permissions, and secure enterprise access controls.</div>
+        <div class="addon-item"><b>Back-Office Stocktaking Administration</b>Internal admin platform for warehouse inventory management, stock verification, and cycle counting operations.</div>
+      </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section class="cv-section">
+      <div class="section-title">Education &amp; Certifications</div>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div class="cert-title">GitHub Actions for CI/CD: Build, Test, and Deploy</div>
+          <div class="cert-meta">LinkedIn Learning · Jun 2026</div>
+          <div class="cert-skills">GitHub · Continuous Integration and Continuous Delivery (CI/CD)</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-title">AWS Certified Cloud Practitioner (CLF-C02)Cert Prep</div>
+          <div class="cert-meta">LinkedIn Learning · Jun 2026</div>
+          <div class="cert-skills">Cloud Computing · Amazon Web Services (AWS) · Cloud architecture fundamentals</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-title">Claude Code in Action</div>
+          <div class="cert-meta">Anthropic · Jun 2026</div>
+          <div class="cert-skills">AI-assisted development · Prompt engineering · Agentic workflows</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-title">Artificial Intelligence for Business and Work</div>
+          <div class="cert-meta">HillelITSchool · Jul 2026</div>
+          <div class="cert-skills">AI fundamentals · Business automation · Prompt engineering for enterprise</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-title">Front-end Pro</div>
+          <div class="cert-meta">HillelITSchool · May 2023</div>
+          <div class="cert-skills">JavaScript · TypeScript · React · Redux · Redux-thunk · Material UI · Axios · DOM manipulation · OOP · MVC/MVP/MVVM · React Router · SPA architecture</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-title">Java</div>
+          <div class="cert-meta">HillelITSchool · May 2024</div>
+          <div class="cert-skills">Object-oriented programming · Java fundamentals</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-title">C#</div>
+          <div class="cert-meta">IT ProLab OÜ · Apr 2022</div>
+          <div class="cert-skills">C# language · .NET fundamentals</div>
+        </div>
+        <div class="edu-item">
+          <strong>Dnipro National University</strong> · Pharmacy (BSc) · 2014–2019 · Dnipro, Ukraine
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Diana Smirnova · Backend Software Engineer · Tallinn, Estonia · <a href="mailto:dianaart1997@gmail.com" style="color:var(--lgray)">dianaart1997@gmail.com</a>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('cv-theme') || 'light';
+    if (savedTheme === 'dark') applyDark();
+
+    function toggleTheme() {
+      if (html.dataset.theme === 'dark') {
+        html.removeAttribute('data-theme');
+        document.getElementById('themeLabel').textContent = 'Light mode';
+        localStorage.setItem('cv-theme', 'light');
+      } else {
+        applyDark();
+      }
+    }
+
+    function applyDark() {
+      html.dataset.theme = 'dark';
+      document.getElementById('themeLabel').textContent = 'Dark mode';
+      localStorage.setItem('cv-theme', 'dark');
+    }
+  </script>
+</body>
+</html>
