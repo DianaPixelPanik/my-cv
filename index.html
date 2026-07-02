@@ -431,9 +431,12 @@
       margin-bottom: 0.5in;
     }
     @media print {
+      * { letter-spacing: normal !important; word-spacing: normal !important; white-space: normal !important; transform: none !important; }
       .topbar, .placeholder-note, footer { display: none; }
       .project-card { box-shadow: none; border: 1px solid #ddd; }
       main { padding: 20px; max-width: 100%; }
+      h1, h2, h3, h4, h5, h6 { letter-spacing: normal !important; }
+      .section-title { letter-spacing: normal !important; }
     }
 
     /* ── Responsive ────────────────────────────────────────────────────── */
