@@ -779,8 +779,8 @@
     Diana Smirnova · Backend Software Engineer · Tallinn, Estonia · <a href="mailto:dianaart1997@gmail.com" style="color:var(--lgray)">dianaart1997@gmail.com</a>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     // Theme toggle
     const html = document.documentElement;
@@ -803,17 +803,56 @@
       localStorage.setItem('cv-theme', 'dark');
     }
 
-    function downloadPDFjsPDF() {
-      const element = document.getElementById('resume-content');
-      const opt = {
-        margin: 10,
-        filename: 'Diana_Smirnova_Resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, letterRendering: true, useCORS: true },
-        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
-        pagebreak: { mode: 'avoid-all', before: '.page-break-before' }
-      };
-      html2pdf().set(opt).from(element).save();
+    async function downloadPDFjsPDF() {
+      try {
+        const element = document.getElementById('resume-content');
+
+        // Ждем загрузки всех шрифтов
+        if (document.fonts) {
+          await document.fonts.ready;
+        }
+
+        // Конфигурация html2canvas
+        const canvas = await html2canvas(element, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          allowTaint: true,
+          letterRendering: true
+        });
+
+        // Создание PDF
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pageWidth - 20;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let position = 10;
+        let heightLeft = imgHeight;
+
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight - 20;
+
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight - 20;
+        }
+
+        pdf.save('Diana_Smirnova_Resume.pdf');
+      } catch (error) {
+        console.error('PDF generation error:', error);
+        alert('Error generating PDF. Please try again.');
+      }
     }
 
     function downloadPDFOld() {
