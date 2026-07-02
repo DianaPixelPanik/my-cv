@@ -776,7 +776,6 @@
     Diana Smirnova · Backend Software Engineer · Tallinn, Estonia · <a href="mailto:dianaart1997@gmail.com" style="color:var(--lgray)">dianaart1997@gmail.com</a>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     // Theme toggle
     const html = document.documentElement;
@@ -800,16 +799,7 @@
     }
 
     function downloadPDF() {
-      const element = document.getElementById('resume-content');
-      const opt = {
-        margin: [8, 6, 8, 6],
-        filename: 'Diana_Smirnova_Resume.pdf',
-        image: { type: 'png' },
-        html2canvas: { scale: 2, logging: false, useCORS: true },
-        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
-        pagebreak: { mode: ['avoid-all'] }
-      };
-      html2pdf().set(opt).from(element).save();
+      window.print();
     }
 
     function shareCV() {
