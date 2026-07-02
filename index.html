@@ -451,11 +451,9 @@
       </a>
     </div>
     <div class="topbar-right">
-      <button class="btn btn-ghost" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">
-        <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <span id="themeLabel">Light mode</span>
+      <button class="btn btn-ghost" onclick="shareCV()" title="Share CV">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
       </button>
       <button onclick="downloadPDF()" class="btn btn-primary" title="Download CV as PDF">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -794,6 +792,26 @@
     function downloadPDF() {
       const filename = 'Diana_Smirnova_Resume.pdf';
       window.print();
+    }
+
+    function shareCV() {
+      const url = window.location.href;
+      const text = 'Check out my CV - Diana Smirnova, Full-Stack Software Engineer';
+
+      if (navigator.share) {
+        navigator.share({
+          title: 'Diana Smirnova - CV',
+          text: text,
+          url: url
+        }).catch(err => console.log('Error sharing:', err));
+      } else {
+        const fallbackText = `${text}\n${url}`;
+        navigator.clipboard.writeText(fallbackText).then(() => {
+          alert('CV link copied to clipboard!');
+        }).catch(() => {
+          alert('Share failed. URL: ' + url);
+        });
+      }
     }
   </script>
 </body>
