@@ -1,0 +1,17 @@
+{
+  "name": "cv-pdf-generator",
+  "version": "1.0.0",
+  "description": "CV website with Puppeteer PDF generation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["cv", "pdf", "puppeteer"],
+  "author": "Diana Smirnova",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.1.0"
+  }
+}
