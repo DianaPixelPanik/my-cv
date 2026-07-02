@@ -457,10 +457,10 @@
         </svg>
         <span id="themeLabel">Light mode</span>
       </button>
-      <a href="Diana_Smirnova_Resume.pdf" download class="btn btn-primary">
+      <button onclick="downloadPDF()" class="btn btn-primary" title="Download CV as PDF">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download PDF
-      </a>
+      </button>
     </div>
   </div>
 
@@ -789,6 +789,11 @@
       html.dataset.theme = 'dark';
       document.getElementById('themeLabel').textContent = 'Dark mode';
       localStorage.setItem('cv-theme', 'dark');
+    }
+
+    function downloadPDF() {
+      const filename = 'Diana_Smirnova_Resume.pdf';
+      window.print();
     }
   </script>
 </body>
