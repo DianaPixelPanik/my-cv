@@ -776,6 +776,8 @@
     Diana Smirnova · Backend Software Engineer · Tallinn, Estonia · <a href="mailto:dianaart1997@gmail.com" style="color:var(--lgray)">dianaart1997@gmail.com</a>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.8.6/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.8.6/vfs_fonts.min.js"></script>
   <script>
     // Theme toggle
     const html = document.documentElement;
@@ -799,7 +801,33 @@
     }
 
     function downloadPDF() {
-      window.print();
+      const docDef = {
+        content: [
+          { text: 'Diana Smirnova', style: 'title' },
+          { text: 'AI Engineer | Full-Stack Software Engineer | Product Designer', style: 'subtitle' },
+          { text: 'dianaart1997@gmail.com • github.com/DianaPixelPanik • linkedin.com/in/diana-smirnova97 • Tallinn, Estonia', style: 'contact' },
+          { text: '\n' },
+          { text: 'PROFESSIONAL SUMMARY', style: 'sectionTitle' },
+          { text: 'Full-stack software engineer with 4+ years delivering end-to-end product features across billing systems, POS integrations, device management platforms, and internal operational tooling at Erply, a retail SaaS platform serving thousands of merchants globally. Proficient across the full stack: Go, JavaScript, TypeScript, PostgreSQL, MongoDB, MariaDB on the backend; React, Redux, Material UI, and WebAssembly on the frontend; S3, Fluentd, Parquet, Webpack, and GitHub Actions in infrastructure. Designs database schemas (1NF–3NF), builds REST APIs and admin UIs, writes unit and integration tests, and owns third-party integrations from API design to production deployment. AWS Cloud Practitioner foundations; experienced with CI/CD pipelines. Background in product design and UI/UX brings a user-first perspective to every technical decision.', style: 'body' },
+          { text: '\n' },
+          { text: 'TECHNICAL SKILLS', style: 'sectionTitle' },
+          { text: 'Languages: Go, JavaScript, TypeScript, SQL, C#, HTML/CSS', style: 'body' },
+          { text: 'Databases: PostgreSQL, MySQL, MongoDB, MariaDB', style: 'body' },
+          { text: 'Backend: REST API design, Microservices, Event-driven architecture, Go Templates, MVC/MVP/MVVM', style: 'body' },
+          { text: 'Frontend: React, Redux, Redux-thunk, Material UI, Axios, WebAssembly, Kibana', style: 'body' },
+          { text: 'Infrastructure: AWS, S3, Fluentd, Parquet, Git, Webpack, JSON/XML, Linux, Docker', style: 'body' },
+          { text: 'Practices: Test-Driven Development (TDD), Domain-Driven Design (DDD), CI/CD', style: 'body' }
+        ],
+        styles: {
+          title: { fontSize: 28, bold: true, color: '#1B3A5C', marginBottom: 4 },
+          subtitle: { fontSize: 14, color: '#2E6DA4', marginBottom: 8 },
+          contact: { fontSize: 11, color: '#555555', marginBottom: 12 },
+          sectionTitle: { fontSize: 12, bold: true, color: '#1B3A5C', marginTop: 10, marginBottom: 6, textTransform: 'uppercase' },
+          body: { fontSize: 11, color: '#1A1A1A', lineHeight: 1.4 }
+        },
+        margins: [15, 15, 15, 15]
+      };
+      pdfMake.createPdf(docDef).download('Diana_Smirnova_Resume.pdf');
     }
 
     function shareCV() {
