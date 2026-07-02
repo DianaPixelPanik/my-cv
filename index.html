@@ -460,7 +460,7 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         Share
       </button>
-      <a href="javascript:void(0);" onclick="window.print(); return false;" class="btn btn-primary" title="Download CV as PDF">
+      <a href="javascript:void(0);" onclick="downloadPDFjsPDF(); return false;" class="btn btn-primary" title="Download CV as PDF">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download PDF
       </a>
@@ -776,6 +776,8 @@
     Diana Smirnova · Backend Software Engineer · Tallinn, Estonia · <a href="mailto:dianaart1997@gmail.com" style="color:var(--lgray)">dianaart1997@gmail.com</a>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     // Theme toggle
     const html = document.documentElement;
@@ -798,11 +800,38 @@
       localStorage.setItem('cv-theme', 'dark');
     }
 
-    function downloadPDF() {
-      console.log('Download PDF clicked');
-      setTimeout(() => {
-        window.print();
-      }, 100);
+    async function downloadPDFjsPDF() {
+      const element = document.getElementById('resume-content');
+      const canvas = await html2canvas(element, {
+        scale: 3,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jspdf.jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const imgWidth = 210 - 20;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 10;
+
+      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      heightLeft -= 297 - 20;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        heightLeft -= 297 - 20;
+      }
+
+      pdf.save('Diana_Smirnova_Resume.pdf');
     }
 
     function downloadPDFOld() {
